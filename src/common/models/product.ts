@@ -17,11 +17,11 @@ export class Product {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  image: {
-    data: Buffer,
-    contentType: String
-  };
+  // @Prop({ required: true })
+  // image: {
+  //   data: Buffer,
+  //   contentType: String
+  // };
 
   @Prop({ required: true })
   price: number;

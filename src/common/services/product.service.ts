@@ -39,7 +39,7 @@ export class ProductService {
       productToUpdate.expiryDate = updateProductDto.expiryDate;
       productToUpdate.category = updateProductDto.category;
       productToUpdate.price = updateProductDto.price;
-      productToUpdate.image = updateProductDto.image;
+      //productToUpdate.image = updateProductDto.image;
       await productToUpdate.save();
       return true;
     } catch (error) {

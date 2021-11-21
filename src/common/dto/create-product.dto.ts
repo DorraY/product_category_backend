@@ -10,10 +10,10 @@ export class CreateProductDto {
   category: Category;
   @IsNotEmpty()
   price: number;
-  @IsNotEmpty()
-  image: {
-    data: Buffer,
-    contentType: String
-  }
+  // @IsNotEmpty()
+  // image: {
+  //   data: Buffer,
+  //   contentType: String
+  // }
 
 }
