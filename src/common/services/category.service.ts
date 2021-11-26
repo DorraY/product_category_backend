@@ -18,16 +18,15 @@ export class CategoryService {
     } catch (error) {
       console.log(error)
       console.log('Error getting categories')
-      return null;
+      return {error:true};
     }
   }
-
   async addCategory(createCategoryDto:CreateCategoryDto) {
     try {
       return await this.CategoryModel.create(createCategoryDto);
     } catch (error) {
       console.log('Error adding category')
-      return null;
+      return {error:true};
     }
   }
 
@@ -35,14 +34,13 @@ export class CategoryService {
     try {
       let categoryToUpdate = await this.CategoryModel.findById({_id:id});
       if (updateCategoryDto?.title===''||updateCategoryDto?.title===undefined) {
-        return true;
+        return await categoryToUpdate.save();
       }
       categoryToUpdate.title = updateCategoryDto?.title;
-      await categoryToUpdate.save();
-      return true;
+      return await categoryToUpdate.save();
     } catch (error) {
-      console.log('Error update category')
-      return false;
+      console.log('Error update category');
+      return {error:false};
     }
   }
 
@@ -53,12 +51,12 @@ export class CategoryService {
         return false;
       }
       else {
-        await this.CategoryModel.deleteOne({ _id: id });
-        return true;
+        return await this.CategoryModel.deleteOne({ _id: id });
+
       }
     } catch (e) {
       console.log("Error deleting product")
-      return false;
+      return {error:true}
     }
   }
 

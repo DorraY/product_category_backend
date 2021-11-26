@@ -4,6 +4,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Category, CategoryDocument } from "../models/category";
 import { Product, ProductDocument } from "../models/product";
 import { CreateProductDto } from "../dto/create-product.dto";
+import { UpdateProductDto } from '../dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -16,35 +17,38 @@ export class ProductService {
 
   async getProducts() {
     try {
-      return await this.ProductModel.find().populate('Category');
+      return await this.ProductModel.find().populate('category');
     } catch (error) {
+      console.log(error)
       console.log('Error getting products')
-      return [];
+      return {error:true};
     }
   }
 
   async addProduct(createProductDto:CreateProductDto) {
     try {
-      return await this.ProductModel.create(createProductDto);
+      let createdProduct =  await this.ProductModel.create(createProductDto);
+      return await this.ProductModel.findOne({_id:createdProduct._id}).populate("category");
+
     } catch (error) {
+      console.log(error)
       console.log('Error adding product')
-      return [];
+      return {error:true};
     }
   }
 
-  async updateProduct(id:String,updateProductDto: CreateProductDto) {
+  async updateProduct(id:String,updateProductDto: UpdateProductDto) {
     try {
       let productToUpdate = await this.ProductModel.findById(id);
-      productToUpdate.name = updateProductDto.name;
-      productToUpdate.expiryDate = updateProductDto.expiryDate;
-      productToUpdate.category = updateProductDto.category;
-      productToUpdate.price = updateProductDto.price;
-      //productToUpdate.image = updateProductDto.image;
+      productToUpdate.name = (updateProductDto.name!==null && updateProductDto.name!==undefined) ? updateProductDto?.name : productToUpdate.name;
+      productToUpdate.expiryDate = (updateProductDto.expiryDate!==null && updateProductDto.expiryDate!==undefined) ? updateProductDto?.expiryDate : productToUpdate.expiryDate;
+      productToUpdate.category = (updateProductDto.category!==null && updateProductDto.category!==undefined) ? updateProductDto?.category : productToUpdate.category;
+      productToUpdate.price = (updateProductDto.price!==null && updateProductDto.price!==undefined) ? updateProductDto?.price : productToUpdate.price;
       await productToUpdate.save();
-      return true;
+      return await this.ProductModel.findOne({_id:id}).populate("category");
     } catch (error) {
       console.log('Error update product')
-      return false;
+      return {error:true};
     }
   }
 
@@ -60,7 +64,7 @@ export class ProductService {
       }
     } catch (e) {
       console.log("Error deleting product")
-      return false;
+      return {error:true};
     }
   }
 
