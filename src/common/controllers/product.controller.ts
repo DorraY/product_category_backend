@@ -21,8 +21,8 @@ export class ProductController{
 
   @Put('update-product/:id')
   async updateProduct(@Param('id') id: string,
-                      @Body() updateZoneDto: CreateProductDto,) {
-    return await this.productService.updateProduct(id,updateZoneDto);
+                      @Body() createProductDto: CreateProductDto,) {
+    return await this.productService.updateProduct(id,createProductDto);
   }
 
   @Delete('delete-product/:id')

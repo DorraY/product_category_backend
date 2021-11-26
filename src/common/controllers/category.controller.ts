@@ -1,9 +1,7 @@
-import { Controller, Get, Post } from "@nestjs/common";
-import { ProductService } from "../services/product.service";
-import { Category } from "../models/category";
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CategoryService } from "../services/category.service";
-import { CreateProductDto } from "../dto/create-product.dto";
 import { CreateCategoryDto } from "../dto/create-category.dto";
+import { UpdateCategoryDto } from '../dto/update-category.dto';
 
 @Controller('category')
 export class CategoryController {
@@ -16,8 +14,20 @@ export class CategoryController {
   }
 
   @Post('new-category')
-  async createNewCategory(CreateCategoryDto:CreateCategoryDto) {
-    return await this.categoryService.addCategory(CreateCategoryDto);
+  async createNewCategory( @Body() createCategoryDto:CreateCategoryDto) {
+    return await this.categoryService.addCategory(createCategoryDto);
+  }
+
+
+  @Put('update-category/:id')
+  async updateCategory(@Param('id') id: string,
+                      @Body() updateCategoryDto: UpdateCategoryDto,) {
+    return await this.categoryService.updateCategory(id,updateCategoryDto);
+  }
+
+  @Delete('delete-category/:id')
+  async deleteCategory(@Param('id') id: string) {
+    return await this.categoryService.deleteCategory(id);
   }
 
 

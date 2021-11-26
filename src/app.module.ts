@@ -4,10 +4,16 @@ import { AppService } from './app.service';
 import { CommonModule } from './common/common.module';
 import { MongooseModule } from "@nestjs/mongoose";
 
-const URL = 'localhost';
+const URL = 'mongodb://localhost:27017/category_product';
 
 @Module({
-  imports: [ CommonModule,MongooseModule.forRoot(`mongodb://${URL}/flutter_test`,{useNewUrlParser:true})],
+  imports: [
+    CommonModule,
+    MongooseModule.forRoot(URL, {
+      authSource: 'admin',
+      user: 'admin',
+      pass: 'admin',
+    useNewUrlParser:true})],
   controllers: [AppController],
   providers: [AppService],
 })
