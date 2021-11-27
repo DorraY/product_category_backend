@@ -18,7 +18,7 @@ export class CategoryService {
     } catch (error) {
       console.log(error)
       console.log('Error getting categories')
-      return {error:true};
+      throw (error)
     }
   }
   async addCategory(createCategoryDto:CreateCategoryDto) {
@@ -26,7 +26,7 @@ export class CategoryService {
       return await this.CategoryModel.create(createCategoryDto);
     } catch (error) {
       console.log('Error adding category')
-      return {error:true};
+      throw (error)
     }
   }
 
@@ -40,7 +40,7 @@ export class CategoryService {
       return await categoryToUpdate.save();
     } catch (error) {
       console.log('Error update category');
-      return {error:false};
+      throw (error)
     }
   }
 
@@ -56,7 +56,7 @@ export class CategoryService {
       }
     } catch (e) {
       console.log("Error deleting product")
-      return {error:true}
+      throw (e)
     }
   }
 

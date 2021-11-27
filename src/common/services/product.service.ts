@@ -19,9 +19,7 @@ export class ProductService {
     try {
       return await this.ProductModel.find().populate('category');
     } catch (error) {
-      console.log(error)
-      console.log('Error getting products')
-      return {error:true};
+      throw (error)
     }
   }
 
@@ -31,9 +29,7 @@ export class ProductService {
       return await this.ProductModel.findOne({_id:createdProduct._id}).populate("category");
 
     } catch (error) {
-      console.log(error)
-      console.log('Error adding product')
-      return {error:true};
+      throw (error)
     }
   }
 
@@ -48,7 +44,7 @@ export class ProductService {
       return await this.ProductModel.findOne({_id:id}).populate("category");
     } catch (error) {
       console.log('Error update product')
-      return {error:true};
+      throw (error)
     }
   }
 
@@ -63,8 +59,7 @@ export class ProductService {
         return true;
       }
     } catch (e) {
-      console.log("Error deleting product")
-      return {error:true};
+      throw (e)
     }
   }
 
