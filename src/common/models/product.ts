@@ -23,6 +23,9 @@ export class Product {
   @Prop({ required: true })
   expiryDate: Date;
 
+  @Prop({ required: true })
+  image: string;
+
 
 
 
