@@ -16,9 +16,9 @@ export class ProductService {
   ) {
   }
 
-  async getProducts() {
+  async getProducts(categoryId) {
     try {
-      return await this.ProductModel.find().populate('category');
+      return await this.ProductModel.find({category:categoryId.id}).populate('category');
     } catch (error) {
       throw (error)
     }

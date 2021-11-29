@@ -14,9 +14,10 @@ export class ProductController{
 
   constructor(private readonly productService: ProductService) {}
 
-  @Get('all-products')
-  async getAllProducts() {
-    return await this.productService.getProducts();
+  @Get('all-products/:id')
+  async getAllProducts(@Param() categoryId: String) {
+    console.log(categoryId)
+    return await this.productService.getProducts(categoryId);
   }
 
   @Put('update-product/:id')
