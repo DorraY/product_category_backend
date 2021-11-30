@@ -58,10 +58,12 @@ export class ProductService {
         return false;
       }
       else {
-        unlink(productToDelete.image, (err) => {
-          if (err) throw err;
-          console.log(productToDelete.image+' was deleted');
-        });
+        if (productToDelete.image!==undefined && productToDelete.image!==null) {
+          unlink(productToDelete.image, (err) => {
+            if (err) throw err;
+            console.log(productToDelete.image+' was deleted');
+          });
+        }
         await this.ProductModel.deleteOne({ _id: id });
         return true;
       }
