@@ -26,7 +26,7 @@ export class ProductService {
 
   async addProduct(image : Express.Multer.File,  createProductDto:CreateProductDto) {
     try {
-      let productData = {...createProductDto,image: image.path}
+      let productData = {...createProductDto,image: image?.path}
       let createdProduct =  await this.ProductModel.create(productData);
       return await this.ProductModel.findOne({_id:createdProduct._id}).populate("category");
 
@@ -42,7 +42,7 @@ export class ProductService {
       productToUpdate.expiryDate = (updateProductDto.expiryDate!==null && updateProductDto.expiryDate!==undefined) ? updateProductDto?.expiryDate : productToUpdate.expiryDate;
       productToUpdate.category = (updateProductDto.category!==null && updateProductDto.category!==undefined) ? updateProductDto?.category : productToUpdate.category;
       productToUpdate.price = (updateProductDto.price!==null && updateProductDto.price!==undefined) ? updateProductDto?.price : productToUpdate.price;
-      productToUpdate.image = image.path;
+      productToUpdate.image = image?.path;
       await productToUpdate.save();
       return await this.ProductModel.findOne({_id:id}).populate("category");
     } catch (error) {

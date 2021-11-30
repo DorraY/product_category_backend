@@ -9,11 +9,11 @@ import { join } from 'path';
 const URL = 'mongodb://localhost:27017/category_product';
 
 @Module({
-  imports: [MulterModule.register({
+  imports: [
+
+    MulterModule.register({
     dest: '../products-images',
-  },     ), ServeStaticModule.forRoot({
-    rootPath: join(__dirname, '..', '/products-images'),
-  }),
+  },     ),
     CommonModule,
     MongooseModule.forRoot(URL, {
       authSource: 'admin',
